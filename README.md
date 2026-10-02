@@ -78,6 +78,7 @@ requirements.txt         Dependencies
    python -m streamlit run ChatBot.py
 ```
    If you skip step 4, the app asks for the token in the sidebar.
+```   
 6. **Run the tests** (after the index exists)
 ```
    python -m pytest tests -q
