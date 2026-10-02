@@ -8,11 +8,6 @@ source, and the supporting passages are shown with every answer.
 
 Built with LangChain, FAISS, Hugging Face and Streamlit.
 
-## Demo
-
-![Answer with sources](screenshots/notice_period.png)
-![Question not covered by the document](screenshots/not_found.png)
-
 ## How it works
 
 ```
