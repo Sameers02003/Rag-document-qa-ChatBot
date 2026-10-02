@@ -54,7 +54,6 @@ rag_chatbot.ipynb        Ingestion, retrieval experiments, RAG chain
 ChatBot.py               Streamlit chat interface
 tests/test_retriever.py  Retrieval tests
 requirements.txt         Dependencies
-screenshots/             Images used in this README
 ```
 
 ## Setup
