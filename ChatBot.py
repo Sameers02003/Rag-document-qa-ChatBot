@@ -6,16 +6,14 @@ import streamlit as st
 from langchain_community.vectorstores import FAISS
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_huggingface import (
-    ChatHuggingFace,
-    HuggingFaceEmbeddings,
-    HuggingFaceEndpoint,
-)
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_ollama import ChatOllama
+
 
 # ---------------------------------------------------------------- settings
 INDEX_DIR = "faiss_index"
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
-LLM_REPO_ID = "meta-llama/Llama-3.1-8B-Instruct"
+LLM_REPO_ID = "llama3.2:3b"
 TOP_K = 4
 CHUNK_SIZE = 800
 CHUNK_OVERLAP = 150
@@ -35,17 +33,6 @@ st.caption(
     "with the supporting sources shown for every answer."
 )
 
-# ---------------------------------------------------------------- token
-token = os.getenv("HF_TOKEN") or os.getenv("HUGGINGFACEHUB_API_TOKEN")
-if not token:
-    token = st.sidebar.text_input("Hugging Face token", type="password")
-if not token:
-    st.info("Enter your Hugging Face token in the sidebar to start.")
-    st.stop()
-os.environ["HF_TOKEN"] = token
-os.environ["HUGGINGFACEHUB_API_TOKEN"] = token
-
-
 # ---------------------------------------------------------------- pipeline
 @st.cache_resource(show_spinner="Loading models and document index...")
 def load_components():
@@ -55,13 +42,7 @@ def load_components():
     )
     retriever = vectorstore.as_retriever(search_kwargs={"k": TOP_K})
 
-    endpoint = HuggingFaceEndpoint(
-        repo_id=LLM_REPO_ID,
-        task="text-generation",
-        max_new_tokens=512,
-        temperature=0.2,
-    )
-    llm = ChatHuggingFace(llm=endpoint)
+    llm = ChatOllama(model=LLM_REPO_ID, temperature=0.2)
 
     prompt = ChatPromptTemplate.from_messages([
         ("system",
