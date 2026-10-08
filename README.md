@@ -16,7 +16,7 @@ PDF -> split into chunks                 User question
     -> embeddings (MiniLM)                   -> embedding
     -> FAISS index (saved to disk)           -> FAISS returns top-k similar chunks
                                              -> prompt (context + question)
-                                             -> LLM (ollama/ llama3.2:3B Instruct)
+                                             -> LLM (ollama/ llama3.2 3B Instruct)
                                              -> answer + sources shown in Streamlit
 ```
 
@@ -41,7 +41,7 @@ PDF -> split into chunks                 User question
 | Chunking | RecursiveCharacterTextSplitter |
 | Embeddings | sentence-transformers/all-MiniLM-L6-v2 (runs locally) |
 | Vector store | FAISS |
-| LLM | llama3.2:3B instructor through Ollama |
+| LLM | llama3.2 3B instructor through Ollama |
 | Interface | Streamlit |
 | Testing | pytest |
 
